@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">D Grocers</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_activity_create_order">Create New Order</string>
+    <string name="title_activity_create_customer">Create New Customer</string>
+    <string name="title_activity_view_order">View Order</string>
+    <string name="title_activity_edit_order">Edit Order</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+
+    <string name="home_tab_new">New</string>
+    <string name="home_tab_in_process">In Process</string>
+    <string name="home_tab_out_for_delivery">Out For Delivery</string>
+    <string name="home_tab_completed">Completed</string>
+
+    <string name="order_status_received">Order Received</string>
+    <string name="order_status_processing">Processing</string>
+    <string name="order_status_out_for_delivery">Out For Delivery</string>
+    <string name="order_status_delivered">Delivered</string>
+    <string name="order_status_cancelled">Cancelled</string>
+
+    <string name="order_payment_status_pending">Pending</string>
+    <string name="order_payment_status_paid">Paid</string>
+
+    <string-array name="dashboard_top_filters">
+        <item>This Week</item>
+        <item>This Month</item>
+        <item>All Time</item>
+    </string-array>
+
+</resources>

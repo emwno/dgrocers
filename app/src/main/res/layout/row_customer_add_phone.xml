@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#f2f2f2" />
+
+    <EditText
+        android:id="@+id/row_phone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/divider"
+        android:layout_toStartOf="@+id/row_remove_phone"
+        android:ems="11"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/row_remove_phone"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/divider"
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="@android:color/darker_gray"
+        android:text="X" />
+
+</RelativeLayout>

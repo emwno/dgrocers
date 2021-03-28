@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_view_order_edit"
+        android:icon="@drawable/ic_edit"
+        android:title="Edit"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/menu_view_order_share"
+        android:icon="@drawable/ic_share"
+        android:title="Share"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/menu_view_order_cancel_edit"
+        android:icon="@drawable/ic_close_white"
+        android:title="Save"
+        android:visible="false"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/menu_view_order_save"
+        android:icon="@drawable/ic_check"
+        android:title="Save"
+        android:visible="false"
+        app:showAsAction="always|withText" />
+
+</menu>
