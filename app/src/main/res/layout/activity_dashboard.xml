@@ -136,13 +136,13 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/topNumbers"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/half_margin"
                 android:layout_weight="1"
-                android:text="Top 5"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:entries="@array/dashboard_top_numbers" />
 
             <Spinner
                 android:id="@+id/topFilters"

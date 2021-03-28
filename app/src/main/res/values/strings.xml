@@ -23,6 +23,11 @@
     <string name="order_payment_status_pending">Pending</string>
     <string name="order_payment_status_paid">Paid</string>
 
+    <string-array name="dashboard_top_numbers">
+        <item>Top 5</item>
+        <item>Top 10</item>
+    </string-array>
+
     <string-array name="dashboard_top_filters">
         <item>This Week</item>
         <item>This Month</item>

@@ -12,9 +12,9 @@ public interface DashboardContract {
 
 		void setOrderCounts(int dailyCount, int weeklyCount, int monthlyCount, int allTimeCount);
 
-		void setAddressOrderCounts(List<Map.Entry<String, Integer>> addressOrderCountList);
-
 		void setAreaOrderCounts(List<Map.Entry<String, Integer>> areaOrderCountList);
+
+		void setAddressOrderCounts(List<Map.Entry<String, Integer>> addressOrderCountList);
 	}
 
 	interface Presenter extends BaseContract.Presenter {
