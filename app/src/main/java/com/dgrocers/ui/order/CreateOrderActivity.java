@@ -111,7 +111,7 @@ public class CreateOrderActivity extends AppCompatActivity implements OnBottomSh
 		newOrder.setCustomer(new CustomerProxy(mSelectedCustomer));
 		newOrder.setNotes(mBinding.coNotes.getText().toString().trim());
 		newOrder.setItems(mBinding.coItems.getText().toString().trim());
-		newOrder.setCurrentStatus(ORDER_STATUS_NEW, AccountManager.getInstance().getCurrentLoggedInAdmin().getName(),
+		newOrder.setCurrentStatus(ORDER_STATUS_NEW, AccountManager.getInstance().getAdminName(),
 				getStatusText(getResources(), ORDER_STATUS_NEW));
 		newOrder.setPaymentStatus(ORDER_PAYMENT_STATUS_PENDING);
 

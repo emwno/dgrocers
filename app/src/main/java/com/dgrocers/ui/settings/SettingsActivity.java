@@ -40,7 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
 		@Override
 		public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 			setPreferencesFromResource(R.xml.root_preferences, rootKey);
-			findPreference("pref_current_login").setSummary("Logged in as " + AccountManager.getInstance().getCurrentLoggedInAdmin().getName());
+			findPreference("pref_current_login").setSummary("Logged in as " + AccountManager.getInstance().getAdminName());
 			findPreference("pref_logout").setOnPreferenceClickListener(preference -> {
 				AccountManager.getInstance().logoutAdmin();
 				Intent intent = new Intent(getActivity(), LoginActivity.class);

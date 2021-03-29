@@ -150,7 +150,7 @@ public class ViewOrderActivity extends AppCompatActivity {
 
 		mOrder.setNotes(mBinding.voNotes.getText().toString().trim());
 		mOrder.setItems(mBinding.voItems.getText().toString().trim());
-		mOrder.addToTracking("Order Modified", AccountManager.getInstance().getCurrentLoggedInAdmin().getName());
+		mOrder.addToTracking("Order Modified", AccountManager.getInstance().getAdminName());
 		FirebaseManager.getInstance().updateOrder(mOrder, updated -> {
 			if (updated) {
 				addTrackingView(mOrder.getTrackingHistory().get(mOrder.getTrackingHistory().size() - 1), true);
@@ -185,7 +185,7 @@ public class ViewOrderActivity extends AppCompatActivity {
 				.setMessage("Are you sure you want to cancel this order?")
 				.setPositiveButton("Yes", (dialog, whichButton) -> {
 					mOrder.setCurrentStatus(ORDER_STATUS_CANCELLED,
-							AccountManager.getInstance().getCurrentLoggedInAdmin().getName(),
+							AccountManager.getInstance().getAdminName(),
 							getStatusText(getResources(), ORDER_STATUS_CANCELLED));
 
 					FirebaseManager.getInstance().updateOrder(mOrder, updated -> {

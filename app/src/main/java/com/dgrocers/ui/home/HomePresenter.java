@@ -190,7 +190,7 @@ public class HomePresenter implements HomeContract.Presenter, OrderTabFragment.O
 	}
 
 	private void setOrderStatus(Order order, int status) {
-		order.setCurrentStatus(status, AccountManager.getInstance().getCurrentLoggedInAdmin().getName(), getStatusText(mContext.getResources(), status));
+		order.setCurrentStatus(status, AccountManager.getInstance().getAdminName(), getStatusText(mContext.getResources(), status));
 	}
 
 	private void checkAppVersion(AppConfig appConfig) {

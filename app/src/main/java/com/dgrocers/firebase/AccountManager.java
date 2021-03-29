@@ -17,8 +17,8 @@ public class AccountManager {
 		return sInstance;
 	}
 
-	public Admin getCurrentLoggedInAdmin() {
-		return mCurrentLoggedInAdmin;
+	public String getAdminName() {
+		return LocalStorageManager.getInstance().getAdminUserName();
 	}
 
 	public void isCurrentLoginValid(OnRequestSuccessListener<Admin> successListener, OnRequestFailureListener failureListener) {
