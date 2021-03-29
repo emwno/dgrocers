@@ -96,6 +96,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
 	}
 
 	private void handleTopAreaNumberChange(int num) {
+		num = Math.min(num, mAreaOrderCountList.size());
 		StringBuilder text = new StringBuilder();
 		for (int i = 0; i < num; i++) {
 			Map.Entry<String, Integer> entry = mAreaOrderCountList.get(i);
@@ -106,6 +107,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
 	}
 
 	private void handleTopAddressNumberChange(int num) {
+		num = Math.min(num, mAddressOrderCountList.size());
 		StringBuilder text = new StringBuilder();
 		for (int i = 0; i < num; i++) {
 			Map.Entry<String, Integer> entry = mAddressOrderCountList.get(i);
