@@ -23,6 +23,9 @@ import com.dgrocers.ui.settings.SettingsActivity;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import nl.invissvenska.modalbottomsheetdialog.Item;
+import nl.invissvenska.modalbottomsheetdialog.ModalBottomSheetDialog;
+
 import static com.dgrocers.ui.home.tabs.OrderTabFragment.OrderActionListener.OrderAction.MARK_DELIVERED;
 import static com.dgrocers.ui.home.tabs.OrderTabFragment.OrderActionListener.OrderAction.MARK_NOOP;
 import static com.dgrocers.ui.home.tabs.OrderTabFragment.OrderActionListener.OrderAction.MARK_OUT_FOR_DELIVERY;
@@ -31,11 +34,12 @@ import static com.dgrocers.util.Constants.NOTIFY_ORDER_CANCELLED;
 import static com.dgrocers.util.Constants.REQUEST_CREATE_ORDER;
 import static com.dgrocers.util.Constants.RESULT_SUCCESS;
 
-public class HomeActivity extends AppCompatActivity implements HomeContract.View {
+public class HomeActivity extends AppCompatActivity implements HomeContract.View, ModalBottomSheetDialog.Listener {
 
 	private HomePresenter mPresenter;
 	private ActivityHomeBinding mBinding;
 	private SectionsPagerAdapter mPagerAdapter;
+	private ModalBottomSheetDialog mOptionsDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,11 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 			Intent intent = new Intent(this, CreateOrderActivity.class);
 			startActivityForResult(intent, REQUEST_CREATE_ORDER);
 		});
+
+		mOptionsDialog = new ModalBottomSheetDialog.Builder()
+				.setHeader("Options")
+				.add(R.menu.home_options)
+				.build();
 
 		mPresenter.loadOrders();
 
@@ -112,15 +121,9 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		int itemId = item.getItemId();
-
-		if (itemId == R.id.menu_home_settings) {
-			startActivity(new Intent(this, SettingsActivity.class));
-			return true;
-		} else if (itemId == R.id.menu_home_dashboard) {
-			startActivity(new Intent(this, DashboardActivity.class));
-			return true;
+		if (itemId == R.id.menu_home_options) {
+			mOptionsDialog.show(getSupportFragmentManager(), "WithHeader");
 		}
-
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -179,6 +182,18 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 					startActivity(intent);
 				},
 				e -> Snackbar.make(mBinding.getRoot(), "Failed to load order", BaseTransientBottomBar.LENGTH_SHORT).show());
+	}
+
+	@Override // Options
+	public void onItemSelected(String tag, Item item) {
+		mOptionsDialog.dismiss();
+		int itemId = item.getId();
+
+		if (itemId == R.id.options_home_settings) {
+			startActivity(new Intent(this, SettingsActivity.class));
+		} else if (itemId == R.id.options_home_dashboard) {
+			startActivity(new Intent(this, DashboardActivity.class));
+		}
 	}
 
 }

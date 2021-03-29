@@ -3,15 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_home_dashboard"
-        android:icon="@drawable/ic_dashboard"
-        android:title="Dashboard"
-        app:showAsAction="always" />
-
-    <item
-        android:id="@+id/menu_home_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="Settings"
+        android:id="@+id/menu_home_options"
+        android:icon="@drawable/ic_options"
+        android:title="Options"
         app:showAsAction="always" />
 
 </menu>
