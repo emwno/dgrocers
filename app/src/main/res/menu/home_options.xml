@@ -6,15 +6,15 @@
         android:icon="@drawable/ic_dashboard"
         android:title="Dashboard" />
 
-    <item
-        android:id="@+id/options_home_search_customer"
-        android:icon="@drawable/ic_customer"
-        android:title="Search Customer" />
+    <!--    <item-->
+    <!--        android:id="@+id/options_home_search_customer"-->
+    <!--        android:icon="@drawable/ic_customer"-->
+    <!--        android:title="Search Customer" />-->
 
-    <item
-        android:id="@+id/options_home_search_order"
-        android:icon="@drawable/ic_order"
-        android:title="Search Order" />
+    <!--    <item-->
+    <!--        android:id="@+id/options_home_search_order"-->
+    <!--        android:icon="@drawable/ic_order"-->
+    <!--        android:title="Search Order" />-->
 
     <item
         android:id="@+id/options_home_settings"
