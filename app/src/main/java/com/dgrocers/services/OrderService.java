@@ -106,7 +106,7 @@ public class OrderService {
 
 	public void getAllPendingOrders(OnRequestSuccessListener<List<Order>> successListener, OnRequestFailureListener failureListener) {
 		mOrderCollectionRef
-				.orderBy("createdAt", DESCENDING)
+				.orderBy("createdAt", ASCENDING)
 				.whereEqualTo("paymentStatus", ORDER_PAYMENT_STATUS_PENDING)
 				.get()
 				.addOnSuccessListener(queryDocumentSnapshots ->
