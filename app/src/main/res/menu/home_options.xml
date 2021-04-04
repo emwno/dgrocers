@@ -6,6 +6,11 @@
         android:icon="@drawable/ic_dashboard"
         android:title="Dashboard" />
 
+    <item
+        android:id="@+id/options_home_pending_orders"
+        android:icon="@drawable/ic_pending"
+        android:title="Pending Orders" />
+
     <!--    <item-->
     <!--        android:id="@+id/options_home_search_customer"-->
     <!--        android:icon="@drawable/ic_customer"-->

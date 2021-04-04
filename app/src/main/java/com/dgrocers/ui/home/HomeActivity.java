@@ -15,11 +15,10 @@ import com.dgrocers.BuildConfig;
 import com.dgrocers.R;
 import com.dgrocers.databinding.ActivityHomeBinding;
 import com.dgrocers.firebase.FirebaseManager;
-import com.dgrocers.ui.customer.SearchCustomerActivity;
 import com.dgrocers.ui.dashboard.DashboardActivity;
 import com.dgrocers.ui.home.tabs.OrderTabFragment;
 import com.dgrocers.ui.order.CreateOrderActivity;
-import com.dgrocers.ui.order.SearchOrderActivity;
+import com.dgrocers.ui.order.PendingOrdersActivity;
 import com.dgrocers.ui.order.ViewOrderActivity;
 import com.dgrocers.ui.settings.SettingsActivity;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -193,6 +192,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
 		if (itemId == R.id.options_home_dashboard) {
 			startActivity(new Intent(this, DashboardActivity.class));
+		} else if (itemId == R.id.options_home_pending_orders) {
+			startActivity(new Intent(this, PendingOrdersActivity.class));
 //		} else if (itemId == R.id.options_home_search_customer) {
 //			startActivity(new Intent(this, SearchCustomerActivity.class));
 //		} else if (itemId == R.id.options_home_search_order) {
