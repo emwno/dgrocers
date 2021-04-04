@@ -5,6 +5,7 @@ import android.app.Application;
 import com.dgrocers.firebase.AccountManager;
 import com.dgrocers.firebase.FirebaseManager;
 import com.dgrocers.firebase.LocalStorageManager;
+import com.dgrocers.services.OrderService;
 
 public class App extends Application {
 
@@ -14,6 +15,7 @@ public class App extends Application {
 		LocalStorageManager.init(this);
 		FirebaseManager.getInstance();
 		AccountManager.getInstance();
+		OrderService.getInstance();
 
 //		{
 //			Location l = new Location();

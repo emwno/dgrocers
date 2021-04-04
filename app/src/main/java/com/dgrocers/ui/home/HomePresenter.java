@@ -9,6 +9,7 @@ import com.dgrocers.firebase.AccountManager;
 import com.dgrocers.firebase.FirebaseManager;
 import com.dgrocers.model.AppConfig;
 import com.dgrocers.model.Order;
+import com.dgrocers.services.OrderService;
 import com.dgrocers.ui.home.HomeContract.Tab;
 import com.dgrocers.ui.home.HomeContract.View;
 import com.dgrocers.ui.home.tabs.OrderTabFragment;
@@ -49,13 +50,13 @@ public class HomePresenter implements HomeContract.Presenter, OrderTabFragment.O
 	public HomePresenter(Context context) {
 		this.mContext = context;
 		this.mView = (View) context;
-		FirebaseManager.getInstance().registerOrderCollectionUpdateListener(object -> loadOrders());
+		OrderService.getInstance().registerOrderCollectionUpdateListener(object -> loadOrders());
 		FirebaseManager.getInstance().registerAppConfigUpdateListener(this::checkAppVersion);
 	}
 
 	@Override
 	public void loadOrders() {
-		FirebaseManager.getInstance().fetchOrders(this::handleOrders,
+		OrderService.getInstance().getDayOrders(this::handleOrders,
 				error -> Snackbar.make(mView.getRoot(), "Failed to fetch orders", LENGTH_LONG).show());
 	}
 
@@ -211,7 +212,7 @@ public class HomePresenter implements HomeContract.Presenter, OrderTabFragment.O
 	}
 
 	private void updateMarking(Order order, OrderAction action) {
-		FirebaseManager.getInstance().updateOrder(order, result -> {
+		OrderService.getInstance().updateOrder(order, result -> {
 			mView.setBadgeNumbers(mNewOrderList.size(), mProcessingOrderList.size(), mOutForDeliveryOrderList.size(), mDeliveredOrderList.size());
 			Snackbar.make(mView.getRoot(), "Order marked as " + getActionText(mContext.getResources(), action), LENGTH_SHORT).show();
 		});

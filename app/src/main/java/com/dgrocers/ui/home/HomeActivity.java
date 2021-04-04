@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dgrocers.BuildConfig;
 import com.dgrocers.R;
 import com.dgrocers.databinding.ActivityHomeBinding;
-import com.dgrocers.firebase.FirebaseManager;
+import com.dgrocers.services.OrderService;
 import com.dgrocers.ui.dashboard.DashboardActivity;
 import com.dgrocers.ui.home.tabs.OrderTabFragment;
 import com.dgrocers.ui.order.CreateOrderActivity;
@@ -176,7 +176,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 	}
 
 	private void handleNewOrderNotification(String objectId) {
-		FirebaseManager.getInstance().fetchOrder(objectId,
+		OrderService.getInstance().getOrder(objectId,
 				order -> {
 					Intent intent = new Intent(HomeActivity.this, ViewOrderActivity.class);
 					intent.putExtra("order", order);

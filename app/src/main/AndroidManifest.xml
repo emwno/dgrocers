@@ -19,6 +19,9 @@
             android:name=".ui.customer.SearchCustomerActivity"
             android:label="@string/title_activity_search_customer" />
         <activity
+            android:name=".ui.order.PendingOrdersActivity"
+            android:label="@string/title_activity_pending_orders" />
+        <activity
             android:name=".ui.dashboard.DashboardActivity"
             android:label="@string/title_activity_dashboard" />
         <activity

@@ -3,8 +3,8 @@ package com.dgrocers.ui.dashboard;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.dgrocers.firebase.FirebaseManager;
 import com.dgrocers.model.Order;
+import com.dgrocers.services.OrderService;
 import com.dgrocers.ui.dashboard.DashboardContract.View;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -37,7 +37,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
 
 	@Override
 	public void loadOrders() {
-		FirebaseManager.getInstance().fetchAllOrders(this::handleOrders,
+		OrderService.getInstance().getAllOrders(this::handleOrders,
 				error -> Snackbar.make(mView.getRoot(), "Failed to fetch orders", LENGTH_LONG).show());
 	}
 

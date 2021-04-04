@@ -20,9 +20,9 @@ import androidx.core.content.ContextCompat;
 import com.dgrocers.R;
 import com.dgrocers.databinding.ActivityViewOrderBinding;
 import com.dgrocers.firebase.AccountManager;
-import com.dgrocers.firebase.FirebaseManager;
 import com.dgrocers.model.Order;
 import com.dgrocers.model.OrderTrackItem;
+import com.dgrocers.services.OrderService;
 import com.google.android.material.snackbar.Snackbar;
 
 import static com.dgrocers.firebase.FirebaseConstants.ORDER_PAYMENT_STATUS_PENDING;
@@ -151,7 +151,7 @@ public class ViewOrderActivity extends AppCompatActivity {
 		mOrder.setNotes(mBinding.voNotes.getText().toString().trim());
 		mOrder.setItems(mBinding.voItems.getText().toString().trim());
 		mOrder.addToTracking("Order Modified", AccountManager.getInstance().getAdminName());
-		FirebaseManager.getInstance().updateOrder(mOrder, updated -> {
+		OrderService.getInstance().updateOrder(mOrder, updated -> {
 			if (updated) {
 				addTrackingView(mOrder.getTrackingHistory().get(mOrder.getTrackingHistory().size() - 1), true);
 				Snackbar.make(mBinding.getRoot(), "Order successfully updated", LENGTH_SHORT).show();
@@ -188,7 +188,7 @@ public class ViewOrderActivity extends AppCompatActivity {
 							AccountManager.getInstance().getAdminName(),
 							getStatusText(getResources(), ORDER_STATUS_CANCELLED));
 
-					FirebaseManager.getInstance().updateOrder(mOrder, updated -> {
+					OrderService.getInstance().updateOrder(mOrder, updated -> {
 						if (updated) {
 							addTrackingView(mOrder.getTrackingHistory().get(mOrder.getTrackingHistory().size() - 1), true);
 							Snackbar.make(mBinding.getRoot(), "Order successfully cancelled", LENGTH_SHORT).show();

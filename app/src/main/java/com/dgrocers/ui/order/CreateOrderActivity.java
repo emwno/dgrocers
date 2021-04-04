@@ -15,6 +15,7 @@ import com.dgrocers.model.Customer;
 import com.dgrocers.model.CustomerProxy;
 import com.dgrocers.model.Location;
 import com.dgrocers.model.Order;
+import com.dgrocers.services.OrderService;
 import com.dgrocers.ui.bottomsheet.BaseBottomSheetDialog.OnBottomSheetItemSelectedCallback;
 import com.dgrocers.ui.bottomsheet.CustomerBottomSheetDialog;
 import com.dgrocers.ui.customer.CreateCustomerActivity;
@@ -115,7 +116,7 @@ public class CreateOrderActivity extends AppCompatActivity implements OnBottomSh
 				getStatusText(getResources(), ORDER_STATUS_NEW));
 		newOrder.setPaymentStatus(ORDER_PAYMENT_STATUS_PENDING);
 
-		FirebaseManager.getInstance().createNewOrder(newOrder,
+		OrderService.getInstance().createOrder(newOrder,
 				newOrderId -> {
 					// Update customer order list to reflect new order
 					mSelectedCustomer.addOrder(newOrderId, newOrder.getCreatedAt());
