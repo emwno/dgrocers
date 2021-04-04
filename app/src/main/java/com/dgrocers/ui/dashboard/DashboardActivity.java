@@ -1,18 +1,16 @@
 package com.dgrocers.ui.dashboard;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.dgrocers.databinding.ActivityDashboardBinding;
+import com.dgrocers.ui.base.BaseActivity;
 
 import java.util.List;
 import java.util.Map;
 
-public class DashboardActivity extends AppCompatActivity implements DashboardContract.View {
+public class DashboardActivity extends BaseActivity implements DashboardContract.View {
 
 	private DashboardPresenter mPresenter;
 	private ActivityDashboardBinding mBinding;
@@ -26,7 +24,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
 		super.onCreate(savedInstanceState);
 		mBinding = ActivityDashboardBinding.inflate(getLayoutInflater());
 		setContentView(mBinding.getRoot());
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mBinding.topNumbers.setSelection(0, false);
 		mBinding.topNumbers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -56,18 +53,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardCon
 
 		mPresenter = new DashboardPresenter(this);
 		mPresenter.loadOrders();
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		int itemId = item.getItemId();
-
-		if (itemId == android.R.id.home) {
-			onBackPressed();
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

@@ -2,11 +2,10 @@ package com.dgrocers.ui.order;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.dgrocers.R;
+import com.dgrocers.ui.base.BaseActivity;
 
-public class PendingOrdersActivity extends AppCompatActivity {
+public class PendingOrdersActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

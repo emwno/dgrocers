@@ -2,17 +2,15 @@ package com.dgrocers.ui.customer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.dgrocers.R;
 import com.dgrocers.databinding.ActivityCreateCustomerBinding;
 import com.dgrocers.firebase.FirebaseManager;
 import com.dgrocers.model.Customer;
+import com.dgrocers.ui.base.BaseActivity;
 import com.dgrocers.ui.bottomsheet.BaseBottomSheetDialog.OnBottomSheetItemSelectedCallback;
 import com.dgrocers.ui.bottomsheet.LocationBottomSheetDialog;
 import com.dgrocers.ui.view.ElasticTapAnimator;
@@ -24,7 +22,7 @@ import java.util.List;
 
 import static com.dgrocers.util.Constants.RESULT_SUCCESS;
 
-public class CreateCustomerActivity extends AppCompatActivity implements OnBottomSheetItemSelectedCallback<String> {
+public class CreateCustomerActivity extends BaseActivity implements OnBottomSheetItemSelectedCallback<String> {
 
 	List<EditText> mPhoneEditTextList = new ArrayList<>();
 
@@ -39,7 +37,6 @@ public class CreateCustomerActivity extends AppCompatActivity implements OnBotto
 		super.onCreate(savedInstanceState);
 		mBinding = ActivityCreateCustomerBinding.inflate(getLayoutInflater());
 		setContentView(mBinding.getRoot());
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		addPhoneNumberField(true);
 		mBinding.ccSelectLocationBtn.setOnClickListener(v -> mLocationBottomSheet.show(getSupportFragmentManager(), "cca"));
@@ -61,15 +58,6 @@ public class CreateCustomerActivity extends AppCompatActivity implements OnBotto
 		mLocationText = locationText.substring(locationText.lastIndexOf(",") + 2);
 		mBinding.ccLocation.setText(locationText);
 		mLocationBottomSheet.dismiss();
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			onBackPressed();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	private void addPhoneNumberField(boolean first) {

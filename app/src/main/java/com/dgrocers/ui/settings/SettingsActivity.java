@@ -2,22 +2,20 @@ package com.dgrocers.ui.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.dgrocers.R;
 import com.dgrocers.firebase.AccountManager;
+import com.dgrocers.ui.base.BaseActivity;
 import com.dgrocers.ui.login.LoginActivity;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings_activity);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager()
@@ -25,15 +23,6 @@ public class SettingsActivity extends AppCompatActivity {
 					.replace(R.id.settings, new SettingsFragment())
 					.commit();
 		}
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			onBackPressed();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -50,4 +39,5 @@ public class SettingsActivity extends AppCompatActivity {
 			});
 		}
 	}
+
 }

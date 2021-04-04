@@ -2,11 +2,9 @@ package com.dgrocers.ui.order;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.dgrocers.databinding.ActivityCreateOrderBinding;
 import com.dgrocers.firebase.AccountManager;
@@ -16,6 +14,7 @@ import com.dgrocers.model.CustomerProxy;
 import com.dgrocers.model.Location;
 import com.dgrocers.model.Order;
 import com.dgrocers.services.OrderService;
+import com.dgrocers.ui.base.BaseActivity;
 import com.dgrocers.ui.bottomsheet.BaseBottomSheetDialog.OnBottomSheetItemSelectedCallback;
 import com.dgrocers.ui.bottomsheet.CustomerBottomSheetDialog;
 import com.dgrocers.ui.customer.CreateCustomerActivity;
@@ -32,7 +31,7 @@ import static com.dgrocers.util.Constants.REQUEST_CREATE_CUSTOMER;
 import static com.dgrocers.util.Constants.RESULT_SUCCESS;
 import static com.dgrocers.util.Constants.getStatusText;
 
-public class CreateOrderActivity extends AppCompatActivity implements OnBottomSheetItemSelectedCallback<Customer> {
+public class CreateOrderActivity extends BaseActivity implements OnBottomSheetItemSelectedCallback<Customer> {
 
 	private ActivityCreateOrderBinding mBinding;
 	private CustomerBottomSheetDialog mCustomerBottomSheet;
@@ -46,7 +45,6 @@ public class CreateOrderActivity extends AppCompatActivity implements OnBottomSh
 		super.onCreate(savedInstanceState);
 		mBinding = ActivityCreateOrderBinding.inflate(getLayoutInflater());
 		setContentView(mBinding.getRoot());
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mBinding.coSelectCustomerBtn.setOnClickListener(v -> mCustomerBottomSheet.show(getSupportFragmentManager(), "coa"));
 		mBinding.coCreateCustomerBtn.setOnClickListener(v -> {
@@ -87,15 +85,6 @@ public class CreateOrderActivity extends AppCompatActivity implements OnBottomSh
 			Snackbar.make(mBinding.getRoot(), "Customer successfully created", BaseTransientBottomBar.LENGTH_SHORT).show();
 			mCustomerBottomSheet = CustomerBottomSheetDialog.newInstance(mLocationList, mCustomerList);
 		}
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			onBackPressed();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	private void createOrder() {

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -23,6 +22,7 @@ import com.dgrocers.firebase.AccountManager;
 import com.dgrocers.model.Order;
 import com.dgrocers.model.OrderTrackItem;
 import com.dgrocers.services.OrderService;
+import com.dgrocers.ui.base.BaseActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import static com.dgrocers.firebase.FirebaseConstants.ORDER_PAYMENT_STATUS_PENDING;
@@ -34,7 +34,7 @@ import static com.dgrocers.util.Constants.getPaymentStatusText;
 import static com.dgrocers.util.Constants.getStatusText;
 import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT;
 
-public class ViewOrderActivity extends AppCompatActivity {
+public class ViewOrderActivity extends BaseActivity {
 
 	private ActivityViewOrderBinding mBinding;
 	private MenuItem mEditMenuItem;
@@ -49,7 +49,6 @@ public class ViewOrderActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		mBinding = ActivityViewOrderBinding.inflate(getLayoutInflater());
 		setContentView(mBinding.getRoot());
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mOrder = getIntent().getParcelableExtra("order");
 
@@ -104,10 +103,7 @@ public class ViewOrderActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		int itemId = item.getItemId();
 
-		if (itemId == android.R.id.home) {
-			onBackPressed();
-			return true;
-		} else if (itemId == R.id.menu_view_order_edit) {
+		if (itemId == R.id.menu_view_order_edit) {
 			setEditMode();
 			return true;
 		} else if (itemId == R.id.menu_view_order_cancel_edit) {
@@ -215,4 +211,5 @@ public class ViewOrderActivity extends AppCompatActivity {
 			Snackbar.make(mBinding.getRoot(), "WhatsApp not installed.", LENGTH_SHORT).show();
 		}
 	}
+
 }
