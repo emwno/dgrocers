@@ -3,9 +3,11 @@ package com.dgrocers.ui.order;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.dgrocers.R;
 import com.dgrocers.databinding.ActivityCreateOrderBinding;
 import com.dgrocers.firebase.AccountManager;
 import com.dgrocers.firebase.FirebaseManager;
@@ -26,16 +28,18 @@ import com.google.firebase.Timestamp;
 import java.util.List;
 
 import static com.dgrocers.firebase.FirebaseConstants.ORDER_PAYMENT_STATUS_PENDING;
-import static com.dgrocers.firebase.FirebaseConstants.ORDER_STATUS_NEW;
 import static com.dgrocers.util.Constants.REQUEST_CREATE_CUSTOMER;
 import static com.dgrocers.util.Constants.RESULT_SUCCESS;
 import static com.dgrocers.util.Constants.getStatusText;
 
 public class CreateOrderActivity extends BaseActivity implements OnBottomSheetItemSelectedCallback<Customer> {
 
+	private final int[] mStatusIDs = {R.id.co_status_group_new, R.id.co_status_group_processing, R.id.co_status_group_out, R.id.co_status_group_delivered};
+
 	private ActivityCreateOrderBinding mBinding;
 	private CustomerBottomSheetDialog mCustomerBottomSheet;
 
+	private int mSelectedStatus;
 	private Customer mSelectedCustomer;
 	private List<Location> mLocationList;
 	private List<Customer> mCustomerList;
@@ -55,6 +59,12 @@ public class CreateOrderActivity extends BaseActivity implements OnBottomSheetIt
 		mBinding.coCreateOrderBtn.setOnClickListener(v -> createOrder());
 		ElasticTapAnimator.animate(mBinding.coSelectCustomerBtn);
 		ElasticTapAnimator.animate(mBinding.coCreateOrderBtn);
+
+		setStatusSelected(mStatusIDs[0]);
+		mBinding.coStatusGroupNew.setOnClickListener(v -> setStatusSelected(v.getId()));
+		mBinding.coStatusGroupProcessing.setOnClickListener(v -> setStatusSelected(v.getId()));
+		mBinding.coStatusGroupOut.setOnClickListener(v -> setStatusSelected(v.getId()));
+		mBinding.coStatusGroupDelivered.setOnClickListener(v -> setStatusSelected(v.getId()));
 
 		FirebaseManager.getInstance().fetchLocations(locationList -> {
 			mLocationList = locationList;
@@ -101,8 +111,8 @@ public class CreateOrderActivity extends BaseActivity implements OnBottomSheetIt
 		newOrder.setCustomer(new CustomerProxy(mSelectedCustomer));
 		newOrder.setNotes(mBinding.coNotes.getText().toString().trim());
 		newOrder.setItems(mBinding.coItems.getText().toString().trim());
-		newOrder.setCurrentStatus(ORDER_STATUS_NEW, AccountManager.getInstance().getAdminName(),
-				getStatusText(getResources(), ORDER_STATUS_NEW));
+		newOrder.setCurrentStatus(mSelectedStatus, AccountManager.getInstance().getAdminName(),
+				getStatusText(getResources(), mSelectedStatus));
 		newOrder.setPaymentStatus(ORDER_PAYMENT_STATUS_PENDING);
 
 		OrderService.getInstance().createOrder(newOrder,
@@ -143,6 +153,20 @@ public class CreateOrderActivity extends BaseActivity implements OnBottomSheetIt
 	private void hideKeyboard() {
 		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+	}
+
+	private void setStatusSelected(int selectedId) {
+		for (int i = 0; i < mStatusIDs.length; i++) {
+			int id = mStatusIDs[i];
+			if (selectedId == id) {
+				mSelectedStatus = i; // Matches FirebaseConstants
+				mBinding.getRoot().findViewById(id).setBackgroundColor(getColor(R.color.teal_700));
+				((TextView) mBinding.getRoot().findViewById(id)).setTextColor(getColor(R.color.white));
+			} else {
+				mBinding.getRoot().findViewById(id).setBackgroundColor(getColor(R.color.white));
+				((TextView) mBinding.getRoot().findViewById(id)).setTextColor(getColor(R.color.darker_gray));
+			}
+		}
 	}
 
 }
