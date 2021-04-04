@@ -193,10 +193,10 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
 		if (itemId == R.id.options_home_dashboard) {
 			startActivity(new Intent(this, DashboardActivity.class));
-		} else if (itemId == R.id.options_home_search_customer) {
-			startActivity(new Intent(this, SearchCustomerActivity.class));
-		} else if (itemId == R.id.options_home_search_order) {
-			startActivity(new Intent(this, SearchOrderActivity.class));
+//		} else if (itemId == R.id.options_home_search_customer) {
+//			startActivity(new Intent(this, SearchCustomerActivity.class));
+//		} else if (itemId == R.id.options_home_search_order) {
+//			startActivity(new Intent(this, SearchOrderActivity.class));
 		} else if (itemId == R.id.options_home_settings) {
 			startActivity(new Intent(this, SettingsActivity.class));
 		}
