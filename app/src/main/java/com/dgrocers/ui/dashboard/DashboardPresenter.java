@@ -78,7 +78,6 @@ public class DashboardPresenter implements DashboardContract.Presenter {
 		mView.setAreaOrderCounts(areaOrderList);
 	}
 
-	@SuppressLint("NewApi")
 	private void handleOrders(List<Order> orderList) {
 		mAllOrderList = orderList;
 

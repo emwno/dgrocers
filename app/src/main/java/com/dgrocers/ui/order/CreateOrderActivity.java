@@ -6,6 +6,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.Nullable;
 
+import com.dgrocers.R;
 import com.dgrocers.databinding.ActivityCreateOrderBinding;
 import com.dgrocers.firebase.AccountManager;
 import com.dgrocers.firebase.FirebaseManager;
@@ -23,6 +24,10 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import static com.dgrocers.firebase.FirebaseConstants.ORDER_PAYMENT_STATUS_PENDING;
@@ -55,6 +60,8 @@ public class CreateOrderActivity extends BaseActivity implements OnBottomSheetIt
 		mBinding.coCreateOrderBtn.setOnClickListener(v -> createOrder());
 		ElasticTapAnimator.animate(mBinding.coSelectCustomerBtn);
 		ElasticTapAnimator.animate(mBinding.coCreateOrderBtn);
+
+		mBinding.coDeliveryTime.check(R.id.co_delivery_time_today);
 
 		FirebaseManager.getInstance().fetchLocations(locationList -> {
 			mLocationList = locationList;
@@ -97,7 +104,7 @@ public class CreateOrderActivity extends BaseActivity implements OnBottomSheetIt
 		mBinding.coCreateOrderBtn.startAnimation();
 
 		Order newOrder = new Order();
-		newOrder.setCreatedAt(Timestamp.now());
+		newOrder.setCreatedAt(getCreatedAt());
 		newOrder.setCustomer(new CustomerProxy(mSelectedCustomer));
 		newOrder.setNotes(mBinding.coNotes.getText().toString().trim());
 		newOrder.setItems(mBinding.coItems.getText().toString().trim());
@@ -122,6 +129,15 @@ public class CreateOrderActivity extends BaseActivity implements OnBottomSheetIt
 
 	private String createCustomerText() {
 		return mSelectedCustomer.getAddress() + "\n" + mSelectedCustomer.getArea() + ", " + mSelectedCustomer.getLocation();
+	}
+
+	private Timestamp getCreatedAt() {
+		if (mBinding.coDeliveryTime.getCheckedButtonId() == R.id.co_delivery_time_tomorrow) {
+			LocalDateTime date = LocalDate.now().atTime(5, 0).plusDays(1);
+			return new Timestamp(Date.from(date.atZone(ZoneId.systemDefault()).toInstant()));
+		} else {
+			return Timestamp.now();
+		}
 	}
 
 	private boolean checkErrors() {
