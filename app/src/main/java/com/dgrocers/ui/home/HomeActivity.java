@@ -20,6 +20,7 @@ import com.dgrocers.ui.home.tabs.OrderTabFragment;
 import com.dgrocers.ui.order.CreateOrderActivity;
 import com.dgrocers.ui.order.PendingOrdersActivity;
 import com.dgrocers.ui.order.ViewOrderActivity;
+import com.dgrocers.ui.search.SearchActivity;
 import com.dgrocers.ui.settings.SettingsActivity;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -194,10 +195,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 			startActivity(new Intent(this, DashboardActivity.class));
 		} else if (itemId == R.id.options_home_pending_orders) {
 			startActivity(new Intent(this, PendingOrdersActivity.class));
-//		} else if (itemId == R.id.options_home_search_customer) {
-//			startActivity(new Intent(this, SearchCustomerActivity.class));
-//		} else if (itemId == R.id.options_home_search_order) {
-//			startActivity(new Intent(this, SearchOrderActivity.class));
+		} else if (itemId == R.id.options_home_search) {
+			startActivity(new Intent(this, SearchActivity.class));
 		} else if (itemId == R.id.options_home_settings) {
 			startActivity(new Intent(this, SettingsActivity.class));
 		}

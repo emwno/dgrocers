@@ -19,10 +19,12 @@ public class Constants {
 	public static final int RESULT_FAILED = 11;
 
 	public static final int REQUEST_CREATE_CUSTOMER = 21;
-	public static final int REQUEST_CREATE_ORDER = 22;
-	public static final int REQUEST_PERM_PHONE_CALL = 23;
+	public static final int REQUEST_EDIT_CUSTOMER = 22;
+	public static final int REQUEST_CREATE_ORDER = 23;
 
 	public static final int NOTIFY_ORDER_CANCELLED = 30;
+
+	public static final int REQUEST_PERM_PHONE_CALL = 40;
 
 	public static String getStatusText(Resources resources, int status) {
 		switch (status) {

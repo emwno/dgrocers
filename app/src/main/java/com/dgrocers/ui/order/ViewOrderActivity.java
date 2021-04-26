@@ -1,9 +1,6 @@
 package com.dgrocers.ui.order;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,8 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.dgrocers.R;
 import com.dgrocers.databinding.ActivityViewOrderBinding;
@@ -23,13 +18,13 @@ import com.dgrocers.model.Order;
 import com.dgrocers.model.OrderTrackItem;
 import com.dgrocers.services.OrderService;
 import com.dgrocers.ui.base.BaseActivity;
+import com.dgrocers.util.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
 import static com.dgrocers.firebase.FirebaseConstants.ORDER_PAYMENT_STATUS_PENDING;
 import static com.dgrocers.firebase.FirebaseConstants.ORDER_STATUS_CANCELLED;
 import static com.dgrocers.firebase.FirebaseConstants.ORDER_STATUS_DELIVERED;
 import static com.dgrocers.util.Constants.NOTIFY_ORDER_CANCELLED;
-import static com.dgrocers.util.Constants.REQUEST_PERM_PHONE_CALL;
 import static com.dgrocers.util.Constants.getPaymentStatusText;
 import static com.dgrocers.util.Constants.getStatusText;
 import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT;
@@ -65,7 +60,7 @@ public class ViewOrderActivity extends BaseActivity {
 			Button phoneButton = phoneView.findViewById(R.id.row_phone);
 
 			phoneButton.setText(phone);
-			phoneButton.setOnClickListener(v -> dialPhoneNumber(phone));
+			phoneButton.setOnClickListener(v -> Utils.dialPhone(this, phone));
 
 			mBinding.voPhoneNumberContainer.addView(phoneView);
 		}
@@ -163,16 +158,6 @@ public class ViewOrderActivity extends BaseActivity {
 			mBinding.voTrackingContainer.addView(statusView, 1);
 		} else {
 			mBinding.voTrackingContainer.addView(statusView);
-		}
-	}
-
-	private void dialPhoneNumber(String phone) {
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PERM_PHONE_CALL);
-		} else {
-			Intent callIntent = new Intent(Intent.ACTION_CALL);
-			callIntent.setData(Uri.parse("tel:" + phone));
-			startActivity(callIntent);
 		}
 	}
 

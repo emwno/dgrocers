@@ -11,15 +11,10 @@
         android:icon="@drawable/ic_pending"
         android:title="Pending Orders" />
 
-    <!--    <item-->
-    <!--        android:id="@+id/options_home_search_customer"-->
-    <!--        android:icon="@drawable/ic_customer"-->
-    <!--        android:title="Search Customer" />-->
-
-    <!--    <item-->
-    <!--        android:id="@+id/options_home_search_order"-->
-    <!--        android:icon="@drawable/ic_order"-->
-    <!--        android:title="Search Order" />-->
+    <item
+        android:id="@+id/options_home_search"
+        android:icon="@drawable/ic_search"
+        android:title="Search" />
 
     <item
         android:id="@+id/options_home_settings"

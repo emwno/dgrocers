@@ -13,11 +13,11 @@
         android:theme="@style/Theme.DGrocers">
 
         <activity
-            android:name=".ui.order.SearchOrderActivity"
-            android:label="@string/title_activity_search_order" />
+            android:name=".ui.customer.ViewCustomerActivity"
+            android:label="@string/title_activity_view_customer" />
         <activity
-            android:name=".ui.customer.SearchCustomerActivity"
-            android:label="@string/title_activity_search_customer" />
+            android:name=".ui.search.SearchActivity"
+            android:label="@string/title_activity_search" />
         <activity
             android:name=".ui.order.PendingOrdersActivity"
             android:label="@string/title_activity_pending_orders" />

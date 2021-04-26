@@ -10,12 +10,12 @@ import com.dgrocers.R;
 import com.dgrocers.databinding.ActivityCreateCustomerBinding;
 import com.dgrocers.firebase.FirebaseManager;
 import com.dgrocers.model.Customer;
+import com.dgrocers.services.CustomerService;
 import com.dgrocers.ui.base.BaseActivity;
 import com.dgrocers.ui.bottomsheet.BaseBottomSheetDialog.OnBottomSheetItemSelectedCallback;
 import com.dgrocers.ui.bottomsheet.LocationBottomSheetDialog;
 import com.dgrocers.ui.view.ElasticTapAnimator;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
+import com.dgrocers.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,8 @@ public class CreateCustomerActivity extends BaseActivity implements OnBottomShee
 
 	private String mLocationText;
 	private String mAreaText;
+
+	private String mEditCustomerId; // Only used to in edit-mode
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,12 @@ public class CreateCustomerActivity extends BaseActivity implements OnBottomShee
 			mLocationBottomSheet = LocationBottomSheetDialog.newInstance(locationList);
 			mBinding.ccSelectLocationBtn.setEnabled(true);
 		});
+
+		Customer editCustomer = getIntent().getParcelableExtra("customer");
+		if (editCustomer != null) {
+			mEditCustomerId = editCustomer.getObjectId();
+			setupEditUI(editCustomer);
+		}
 	}
 
 	@Override
@@ -58,6 +66,25 @@ public class CreateCustomerActivity extends BaseActivity implements OnBottomShee
 		mLocationText = locationText.substring(locationText.lastIndexOf(",") + 2);
 		mBinding.ccLocation.setText(locationText);
 		mLocationBottomSheet.dismiss();
+	}
+
+	// Only used in edit-mode
+	private void setupEditUI(Customer editCustomer) {
+		getSupportActionBar().setTitle("Edit Customer");
+		mBinding.ccCreateCustomerBtn.setText("Save Customer");
+		mBinding.ccCreateCustomerBtn.setOnClickListener(v -> saveCustomer());
+
+		mAreaText = editCustomer.getArea();
+		mLocationText = editCustomer.getLocation();
+
+		mBinding.ccAddress.setText(editCustomer.getAddress());
+		mBinding.ccLocation.setText(String.format("%s, %s", mAreaText, mLocationText));
+		mPhoneEditTextList.get(0).setText(editCustomer.getPhoneNumbers().get(0));
+
+		for (int i = 1; i < editCustomer.getPhoneNumbers().size(); i++) {
+			addPhoneNumberField(false);
+			mPhoneEditTextList.get(i).setText(editCustomer.getPhoneNumbers().get(i));
+		}
 	}
 
 	private void addPhoneNumberField(boolean first) {
@@ -91,7 +118,7 @@ public class CreateCustomerActivity extends BaseActivity implements OnBottomShee
 			newCustomer.addPhoneNumber(editText.getText().toString().trim());
 		}
 
-		FirebaseManager.getInstance().createNewCustomer(newCustomer,
+		CustomerService.getInstance().createCustomer(newCustomer,
 				newCustomerId -> {
 					newCustomer.setObjectId(newCustomerId);
 					Intent intent = getIntent();
@@ -100,9 +127,41 @@ public class CreateCustomerActivity extends BaseActivity implements OnBottomShee
 					finish();
 				},
 				error -> {
-					Snackbar.make(mBinding.getRoot(), "Failed to create customer", BaseTransientBottomBar.LENGTH_SHORT).show();
+					Utils.showError(mBinding.getRoot(), "Failed to create customer.");
 					mBinding.ccCreateCustomerBtn.revertAnimation();
 				});
+	}
+
+	private void saveCustomer() {
+		if (checkErrors()) {
+			mBinding.getRoot().scrollTo(0, 0);
+			return;
+		}
+
+		hideKeyboard();
+		mBinding.ccCreateCustomerBtn.startAnimation();
+
+		Customer updatedCustomer = new Customer();
+		updatedCustomer.setObjectId(mEditCustomerId);
+		updatedCustomer.setAddress(mBinding.ccAddress.getText().toString().trim());
+		updatedCustomer.setLocation(mLocationText);
+		updatedCustomer.setArea(mAreaText);
+
+		for (EditText editText : mPhoneEditTextList) {
+			updatedCustomer.addPhoneNumber(editText.getText().toString().trim());
+		}
+
+		CustomerService.getInstance().updateCustomer(updatedCustomer, updated -> {
+			if (updated) {
+				Intent intent = new Intent(this, CreateCustomerActivity.class);
+				intent.putExtra("customer", updatedCustomer);
+				setResult(RESULT_SUCCESS, intent);
+				finish();
+			} else {
+				Utils.showError(mBinding.getRoot(), "Failed to update customer.");
+				mBinding.ccCreateCustomerBtn.revertAnimation();
+			}
+		});
 	}
 
 	private boolean checkErrors() {
@@ -133,8 +192,10 @@ public class CreateCustomerActivity extends BaseActivity implements OnBottomShee
 	}
 
 	private void hideKeyboard() {
-		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-		inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+		if (getCurrentFocus() != null) {
+			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+			inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+		}
 	}
 
 }
